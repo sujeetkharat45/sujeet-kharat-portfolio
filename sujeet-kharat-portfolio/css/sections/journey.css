@@ -1,0 +1,26 @@
+/* Timeline and education */
+
+/* timeline */
+.tl{position:relative;display:grid;gap:26px;padding-left:34px}
+.tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--accent),var(--accent2),transparent);box-shadow:0 0 10px rgba(var(--accent-rgb),.6)}
+.tl article{position:relative;border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:22px 26px;transition:border-color .25s,transform .25s}
+.tl article:hover{border-color:var(--accent);transform:translateX(4px)}
+.tl article::before{content:"";position:absolute;left:-34px;top:28px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 5px rgba(var(--accent-rgb),.12),0 0 14px rgba(var(--accent-rgb),.6)}
+.tl .when{font-family:var(--mono);font-size:.76rem;color:var(--accent);margin:0 0 6px}
+.tl h3{margin:0;font-size:1.15rem;font-weight:600;letter-spacing:-.01em}
+.tl .org{margin:0 0 10px;color:var(--muted);font-size:.9rem}
+.tl p.d{margin:0;color:var(--muted);font-size:.95rem;max-width:72ch}
+
+/* education */
+.edu{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;margin-top:64px}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:28px}
+.card h3{margin:0 0 18px;font-size:1.2rem;font-weight:600}
+.edu-row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.edu-row:last-of-type{border-bottom:0}
+.edu-row b{display:block;font-weight:600}
+.edu-row small{color:var(--muted)}
+.edu-row .score{font-family:var(--mono);color:var(--accent);white-space:nowrap;font-size:.9rem}
+.ach{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.ach li{display:flex;gap:12px;color:var(--muted);font-size:.95rem}
+.ach li::before{content:"";flex:none;width:8px;height:8px;margin-top:.55em;border-radius:2px;background:var(--accent2);transform:rotate(45deg);box-shadow:0 0 8px var(--accent2)}
+.ach b{color:var(--text);font-weight:600}

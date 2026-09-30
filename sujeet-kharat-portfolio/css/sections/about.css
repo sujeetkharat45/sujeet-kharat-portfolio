@@ -1,0 +1,26 @@
+/* Sections, stats and about */
+
+/* sections */
+section.block{padding:96px 0;position:relative}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:44px;max-width:60ch}
+.sec-head h2{margin:0;font-size:clamp(2rem,4.6vw,3.3rem);letter-spacing:-.035em;line-height:1.05;font-weight:600}
+.sec-head h2 span{white-space:pre-wrap}
+.sec-head p{margin:0;color:var(--muted)}
+.sec-head.flat{margin-bottom:0}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden}
+.stat{padding:26px 24px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat .n{font-size:clamp(2.2rem,4vw,3.1rem);font-weight:300;letter-spacing:-.04em;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums;text-shadow:0 0 26px rgba(var(--accent-rgb),.55)}
+.stat p{margin:10px 0 0;color:var(--muted);font-size:.85rem;line-height:1.45}
+
+/* about */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:64px;align-items:start}
+.about p{margin:0 0 16px;color:var(--muted);font-size:1.05rem;max-width:60ch}
+.about p strong{color:var(--text);font-weight:600}
+.facts{display:grid;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+.facts div{display:flex;justify-content:space-between;gap:16px;padding:14px 18px;border-bottom:1px solid var(--line);font-size:.92rem}
+.facts div:last-child{border-bottom:0}
+.facts span{color:var(--muted);font-family:var(--mono);font-size:.82rem}
+.facts b{font-weight:600;text-align:right}

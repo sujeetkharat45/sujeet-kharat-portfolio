@@ -1,0 +1,26 @@
+/* Media queries and reduced motion */
+
+@media (max-width:920px){
+  .hero .wrap{grid-template-columns:1fr;gap:40px}
+  .about,.edu,.contact-grid{grid-template-columns:1fr}
+  .proj{grid-template-columns:1fr}
+  .proj .demo,.proj.flip .demo{order:2;border-left:0;border-right:0;border-top:1px solid var(--line)}
+  .stat{border-right:0;border-bottom:1px solid var(--line)}
+  .stat:last-child{border-bottom:0}
+  .kbd-btn kbd{display:none}
+}
+@media (max-width:560px){
+  .brand{font-size:.95rem}
+  .proj .info,.proj .demo{padding:26px 20px}
+  section.block{padding:72px 0}
+  .term-body{height:300px;font-size:.74rem}
+  .graph-stage canvas{height:500px}
+  .g-legend .hint{margin-left:0;flex-basis:100%}
+  .status .hide-s{display:none}
+  .kbd-btn span{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .hero::after{display:none}
+}

@@ -1,0 +1,31 @@
+/* HUD brackets, global overlays, boot screen */
+
+/* HUD brackets */
+.hud{position:relative}
+.hud::before,.hud::after{content:"";position:absolute;width:18px;height:18px;border:2px solid var(--accent);pointer-events:none;z-index:3;filter:drop-shadow(0 0 5px rgba(var(--accent-rgb),.8))}
+.hud::before{top:0;left:0;border-right:0;border-bottom:0;border-top-left-radius:inherit}
+.hud::after{bottom:0;right:0;border-left:0;border-top:0;border-bottom-right-radius:inherit}
+
+/* global overlays */
+.glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(460px circle at var(--mx,50%) var(--my,30%),rgba(var(--accent-rgb),.11),transparent 60%)}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:80;transform-origin:0 50%;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 0 12px var(--accent)}
+.reticle{position:fixed;left:0;top:0;width:0;height:0;z-index:75;pointer-events:none;display:none}
+@media (hover:hover) and (pointer:fine){.reticle{display:block}}
+.reticle i{position:absolute;left:-15px;top:-15px;width:30px;height:30px;border:1px solid rgba(var(--accent-rgb),.65);border-radius:50%}
+.reticle i::before,.reticle i::after{content:"";position:absolute;background:rgba(var(--accent-rgb),.65)}
+.reticle i::before{left:50%;top:-6px;bottom:-6px;width:1px}
+.reticle i::after{top:50%;left:-6px;right:-6px;height:1px}
+.reticle b{position:absolute;left:22px;top:12px;font:500 .62rem var(--mono);color:var(--accent);white-space:nowrap;opacity:.85}
+
+/* boot */
+.boot{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:24px;transition:opacity .7s ease,visibility .7s;cursor:pointer}
+.boot.done{opacity:0;visibility:hidden}
+.boot-box{width:min(520px,100%);font-family:var(--mono);font-size:.82rem;line-height:1.9}
+.boot-box div{color:var(--muted)}
+.boot-box div b{font-weight:500;color:var(--ok)}
+.boot-box .hi{color:var(--accent)}
+.boot-bar{height:3px;background:var(--line);margin-top:20px;border-radius:3px;overflow:hidden}
+.boot-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 0 14px var(--accent);transition:width .3s linear}
+.boot-skip{margin-top:14px;font-size:.7rem;color:var(--muted);opacity:.7}

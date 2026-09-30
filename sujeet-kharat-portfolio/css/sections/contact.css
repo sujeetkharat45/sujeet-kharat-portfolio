@@ -1,0 +1,39 @@
+/* Contact and portrait */
+
+/* contact */
+.contact{border:1px solid var(--line);border-radius:24px;padding:clamp(28px,5vw,64px);overflow:hidden;
+  background:radial-gradient(700px circle at 100% 0%,rgba(var(--accent-rgb),.18),transparent 60%),radial-gradient(500px circle at 0% 100%,rgba(var(--accent2-rgb),.13),transparent 60%),var(--panel)}
+.contact h2{margin:0 0 12px;font-size:clamp(2rem,5.4vw,4rem);letter-spacing:-.04em;line-height:1;font-weight:300;max-width:16ch}
+.contact>p{margin:0 0 36px;color:var(--muted);max-width:52ch}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.links-col{display:grid;gap:10px}
+.link-row{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--bg) 55%,transparent);transition:border-color .2s,transform .2s;min-width:0}
+.link-row:hover{border-color:var(--accent);transform:translateX(4px)}
+.link-row a{display:block;flex:1;min-width:0;padding:14px 18px;text-decoration:none}
+.link-row small{color:var(--muted);font-family:var(--mono);font-size:.72rem;display:block}
+.link-row span{overflow-wrap:anywhere}
+.link-row button{margin-right:14px;border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:.3rem .7rem;font-size:.78rem;flex:none}
+.link-row button:hover{border-color:var(--accent)}
+.compose{display:grid;gap:12px}
+.compose input,.compose textarea{width:100%;font:inherit;color:var(--text);background:color-mix(in srgb,var(--bg) 60%,transparent);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem;resize:vertical;transition:border-color .2s}
+.compose input:focus,.compose textarea:focus{outline:none;border-color:var(--accent)}
+.compose ::placeholder{color:var(--muted)}
+footer{padding:36px 0 84px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);margin-top:80px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* portrait */
+.portrait{position:relative;border-radius:20px;overflow:hidden;border:1px solid rgba(var(--accent-rgb),.4);background:linear-gradient(160deg,var(--panel2),var(--panel));aspect-ratio:4/5;width:100%;max-width:340px;isolation:isolate;transition:transform .25s ease-out;box-shadow:0 30px 80px -30px rgba(var(--accent-rgb),.45)}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+.portrait .mono{position:absolute;inset:0;display:grid;place-items:center;font-size:7rem;font-weight:200;letter-spacing:-.06em;color:var(--accent);text-shadow:0 0 40px rgba(var(--accent-rgb),.6)}
+.portrait .shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(var(--accent-rgb),.10),transparent 35%,transparent 60%,rgba(4,7,15,.55)),radial-gradient(120% 90% at 50% 40%,transparent 55%,rgba(4,7,15,.35))}
+.portrait .scan{position:absolute;left:0;right:0;top:-70px;height:70px;pointer-events:none;background:linear-gradient(to bottom,transparent,rgba(var(--accent-rgb),.22),transparent);animation:pscan 5s linear infinite}
+@keyframes pscan{to{transform:translateY(520px)}}
+.portrait .cap{position:absolute;left:12px;right:12px;bottom:12px;display:flex;justify-content:space-between;gap:10px;font:500 .64rem var(--mono);color:var(--text);background:color-mix(in srgb,var(--bg) 72%,transparent);border:1px solid var(--line);border-radius:8px;padding:.35rem .6rem;backdrop-filter:blur(6px)}
+.portrait .cap i{color:var(--ok);font-style:normal}
+.avatar{width:66px;height:66px;border-radius:50%;overflow:hidden;border:2px solid var(--accent);box-shadow:0 0 0 4px rgba(var(--accent-rgb),.15),0 0 26px rgba(var(--accent-rgb),.5);flex:none;display:grid;place-items:center;background:var(--panel2);font-weight:600;font-size:1.3rem;color:var(--accent)}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-id{display:flex;align-items:center;gap:16px;margin-bottom:18px;animation:rise 1s .3s cubic-bezier(.2,.8,.2,1) backwards}
+.hero-id .role-line{margin:0}
+.tags button{display:inline-flex;align-items:center;gap:8px;padding:.3rem .7rem;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--panel) 80%,transparent);font:inherit;color:var(--accent);transition:border-color .2s}
+.tags button:hover{border-color:var(--accent)}
+.kbd-btn .ic{font-weight:700;color:var(--accent)}
