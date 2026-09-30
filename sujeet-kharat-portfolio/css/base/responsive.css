@@ -14,7 +14,11 @@
   .proj .info,.proj .demo{padding:26px 20px}
   section.block{padding:72px 0}
   .term-body{height:300px;font-size:.74rem}
-  .graph-stage canvas{height:500px}
+    .graph-stage canvas{height:560px}
+  /* info box sits under the graph instead of covering nodes */
+  .g-info{position:static;max-width:none;min-height:104px;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;backdrop-filter:none;padding:12px 18px}
+  .only-d{display:none!important}
+  .only-m{display:inline!important}
   .g-legend .hint{margin-left:0;flex-basis:100%}
   .status .hide-s{display:none}
   .kbd-btn span{display:none}

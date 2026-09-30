@@ -18,9 +18,13 @@ const G_SUB=[['Java','OOP'],['Java','Collections'],['Java','Exception handling']
 const G_ANCHOR={Backend:[.22,.32],Frontend:[.78,.26],Database:[.8,.74],Tools:[.46,.9],'Core CS':[.14,.76],
   'ETMS':[.42,.42],'ExpenseSensei':[.64,.4],'Attendance system':[.44,.66]};
 
+/* Portrait layout used on narrow screens (fractions of canvas width/height) */
+const G_ANCHOR_SM={Backend:[.28,.14],Frontend:[.76,.24],Database:[.8,.72],Tools:[.55,.94],'Core CS':[.18,.82],
+  'ETMS':[.32,.36],'ExpenseSensei':[.7,.46],'Attendance system':[.55,.62]};
 P.G_COLORS=G_COLORS;
 P.G_SKILLS=G_SKILLS;
 P.G_PROJECTS=G_PROJECTS;
 P.G_SUB=G_SUB;
 P.G_ANCHOR=G_ANCHOR;
+P.G_ANCHOR_SM=G_ANCHOR_SM;
 })(window.Portfolio);

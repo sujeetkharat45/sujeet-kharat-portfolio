@@ -53,3 +53,5 @@
 .g-legend{display:flex;flex-wrap:wrap;gap:8px 20px;padding:14px 20px;border-top:1px solid var(--line);font:500 .74rem var(--mono);color:var(--muted)}
 .g-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;background:var(--c);box-shadow:0 0 9px var(--c)}
 .g-legend .hint{margin-left:auto}
+.g-info i,.g-legend i.only-d,.g-legend i.only-m{font-style:normal;margin:0;width:auto;height:auto;background:none;box-shadow:none;display:inline}
+.only-m{display:none!important}

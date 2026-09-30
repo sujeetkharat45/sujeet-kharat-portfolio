@@ -1,6 +1,6 @@
 (function (P) {
 const {useState,useEffect,useRef}=React;
-const {html,reduce,G_ANCHOR,G_COLORS,G_PROJECTS,G_SKILLS,G_SUB}=P;
+const {html,reduce,G_ANCHOR,G_ANCHOR_SM,G_COLORS,G_PROJECTS,G_SKILLS,G_SUB}=P;
 
 function SkillGraph(){
   const ref=useRef(null);const [info,setInfo]=useState(null);
@@ -18,7 +18,7 @@ function SkillGraph(){
     G_SUB.forEach(([a,b])=>edges.push({a:byId[a],b:byId[b],len:48,kind:'sub'}));
     const nbrs={};nodes.forEach(n=>{nbrs[n.id]=new Set();});
     edges.forEach(e=>{nbrs[e.a.id].add(e.b.id);nbrs[e.b.id].add(e.a.id);});
-    const anchor=n=>{const a=G_ANCHOR[n.type==='project'?n.id:n.cat];return [a[0]*w,a[1]*h];};
+    const anchor=n=>{const map=w<560?G_ANCHOR_SM:G_ANCHOR;const a=map[n.type==='project'?n.id:n.cat];return [a[0]*w,a[1]*h];};
     function init(){
       nodes.forEach(n=>{const a=anchor(n);n.x=a[0]+(Math.random()-.5)*120;n.y=a[1]+(Math.random()-.5)*120;});
     }
@@ -29,17 +29,17 @@ function SkillGraph(){
       if(reduce){for(let i=0;i<300;i++)tick();draw();}
     }
     function tick(){
-      const small=w<560;const rep=small?900:1700;
+      const small=w<560;const rep=small?1500:1700;
       for(let i=0;i<nodes.length;i++){
         const a=nodes[i];
         for(let j=i+1;j<nodes.length;j++){
           const b=nodes[j];let dx=a.x-b.x,dy=a.y-b.y;let d2=dx*dx+dy*dy;
-          if(d2<1)d2=1;if(d2>26000)continue;const d=Math.sqrt(d2);const f=rep/d2;
+          if(d2<1)d2=1;if(d2>(small?42000:26000))continue;const d=Math.sqrt(d2);const f=rep/d2;
           dx/=d;dy/=d;a.vx+=dx*f;a.vy+=dy*f;b.vx-=dx*f;b.vy-=dy*f;
         }
       }
       edges.forEach(e=>{
-        const dx=e.b.x-e.a.x,dy=e.b.y-e.a.y,d=Math.hypot(dx,dy)||1;const k=.02*(d-e.len*(small?.7:1))/d;
+        const dx=e.b.x-e.a.x,dy=e.b.y-e.a.y,d=Math.hypot(dx,dy)||1;const k=.02*(d-(small&&e.kind==='sub'?62:e.len*(small?.8:1)))/d;
         e.a.vx+=dx*k;e.a.vy+=dy*k;e.b.vx-=dx*k;e.b.vy-=dy*k;
       });
       nodes.forEach(n=>{
@@ -73,8 +73,7 @@ function SkillGraph(){
         ctx.beginPath();ctx.arc(n.x,n.y,n===hover?n.r+2:n.r,0,6.283);ctx.fill();
         ctx.restore();
         if(n.type==='project'){ctx.strokeStyle=rgba('text',al*.6);ctx.lineWidth=1;ctx.beginPath();ctx.arc(n.x,n.y,n.r+5,0,6.283);ctx.stroke();}
-        const showLabel=n.type==='project'||!small||lit&&hover;
-        if(showLabel){
+        if(!small){
           ctx.font=(n.type==='project'?'600 13px ':'500 11px ')+(n.type==='project'?"Sora,":"'JetBrains Mono',")+'sans-serif';
           ctx.textBaseline='middle';
           const right=n.x>w-110;ctx.textAlign=right?'right':'left';
@@ -82,6 +81,36 @@ function SkillGraph(){
           const off=n.r+(n.type==='project'?9:6);
           ctx.fillText(n.id,n.x+(right?-off:off),n.y+(n.type==='project'?-1:0));
         }
+      });
+      if(small)drawLabelsSmall(hi);
+    }
+    /* Mobile labels: every node gets a small label placed where it does not overlap anything */
+    function drawLabelsSmall(hi){
+      const placed=[];const hit=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+      nodes.forEach(n=>placed.push({x:n.x-n.r-2,y:n.y-n.r-2,w:n.r*2+4,h:n.r*2+4}));
+      const order=nodes.slice().sort((a,b)=>(a.type==='project'?0:1)-(b.type==='project'?0:1));
+      ctx.textBaseline='middle';
+      order.forEach(n=>{
+        const lit=!hover||n===hover||hi.has(n.id);const al=lit?1:.14;
+        const proj=n.type==='project';
+        ctx.font=(proj?'600 12px ':'500 9.5px ')+(proj?"Sora,":"'JetBrains Mono',")+'sans-serif';
+        const tw=ctx.measureText(n.id).width,th=proj?14:12,gap=n.r+(proj?7:4);
+        const cands=[[gap,-th/2,'left'],[-gap-tw,-th/2,'left'],[-tw/2,-gap-th,'left'],[-tw/2,gap,'left'],
+                     [gap,-gap-th,'left'],[-gap-tw,gap,'left'],[gap,gap,'left'],[-gap-tw,-gap-th,'left'],
+                     [gap+10,-th/2,'left'],[-gap-tw-10,-th/2,'left'],[-tw/2,-gap-th-10,'left'],[-tw/2,gap+10,'left']];
+        let best=null;
+        for(const c of cands){
+          const r={x:n.x+c[0],y:n.y+c[1],w:tw,h:th};
+          if(r.x<2||r.x+r.w>w-2||r.y<2||r.y+r.h>h-2)continue;
+          if(!placed.some(p=>hit(p,r))){best=r;break;}
+        }
+        if(!best){ // fallback: clamp inside the canvas
+          best={x:Math.max(2,Math.min(w-tw-2,n.x+cands[0][0])),y:Math.max(2,Math.min(h-th-2,n.y+cands[0][1])),w:tw,h:th};
+        }
+        placed.push(best);
+        ctx.textAlign='left';
+        ctx.fillStyle=rgba('text',proj?al:al*(lit&&hover?1:.8));
+        ctx.fillText(n.id,best.x,best.y+th/2);
       });
     }
     function loop(){frame++;if(visible){tick();draw();}raf=requestAnimationFrame(loop);}
@@ -122,12 +151,12 @@ function SkillGraph(){
     <div className="graph-card hud">
       <div className="graph-stage">
         <canvas ref=${ref} role="img" aria-label="Interactive graph linking my skills to the projects where I used them"></canvas>
-        <div className="g-info">${info?html`<b>${info.id}</b><span>${info.type==='project'?'Project':info.cat}</span><span>${info.rel.length?relText:'Core skill'}</span>`:html`<b>Skill graph</b><span>Hover a node to trace where it was used.</span>`}</div>
+        <div className="g-info">${info?html`<b>${info.id}</b><span>${info.type==='project'?'Project':info.cat}</span><span>${info.rel.length?relText:'Core skill'}</span>`:html`<b>Skill graph</b><span><i className="only-d">Hover</i><i className="only-m">Tap</i> a node to trace where it was used.</span>`}</div>
       </div>
       <div className="g-legend">
         ${Object.keys(G_COLORS).map(k=>html`<span key=${k}><i style=${{'--c':'var(--'+G_COLORS[k]+')'}}></i>${k}</span>`)}
         <span><i style=${{'--c':'var(--text)'}}></i>Project</span>
-        <span className="hint">drag nodes to rearrange · tap on touch screens</span>
+        <span className="hint"><i className="only-d">drag nodes to rearrange · </i>tap a node on touch screens</span>
       </div>
       <p className="sr">Backend: Java, Spring Boot, Spring Security, JWT, Spring Data JPA, Hibernate, REST APIs, JDBC. Frontend: React, JavaScript, HTML5, CSS3, Tesseract.js, Regex. Database: SQL, PL/SQL, Oracle DB, PostgreSQL, MongoDB. Tools: Git, GitHub, Maven, Postman. Core CS: OOP, Collections, Exception handling, Data structures, DBMS, Operating systems, Networks.</p>
     </div>`;
